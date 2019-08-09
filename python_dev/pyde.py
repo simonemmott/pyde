@@ -5,12 +5,43 @@ from python_dev import about as about_pyde
 import python_dev.include
 import logging
 import re
+import importlib.util
 
 logger = logging.getLogger(__name__)
 
+install_dir = os.getcwd()
+
+meta = None
+
+def get_module_metadata(install_dir):
+    class Meta(object):
+        pass
+    meta = Meta()
+    meta.modules = []
+    for file in os.listdir(install_dir):
+        file_path = os.path.sep.join([install_dir, file])
+        if os.path.isdir(file_path):
+            init_py = os.path.sep.join([file_path, '__init__.py'])
+            if os.path.exists(init_py):
+                meta.modules.append(file)
+            about_py = os.path.sep.join([file_path, 'about.py'])
+            if os.path.exists(about_py):
+                meta.root_module = file
+                spec = importlib.util.spec_from_file_location('about', about_py)
+                about = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(about)
+                meta.about = about
+    return meta
+            
+
 @click.group()
-def run():
-    pass
+@click.option('--target', help='Set the target directory')
+def run(target):
+    if target:
+        global install_dir
+        install_dir = target
+    global meta
+    meta = get_module_metadata(install_dir)
 
 @run.command(help='Show about message and exit')
 @click.option('--version', is_flag=True, help='Show the version and exit')
@@ -35,7 +66,6 @@ def about(version):
         click.echo('#####################################')
         
 def _write_about(about_py, version=None, author=None, email=None, description=None, package=None, url=None):
-    logger.debug('_write_about')
     if not os.path.exists(about_py):
         open(about_py, 'w').close()
     with open(about_py, 'r') as fp:
@@ -110,9 +140,9 @@ def init(module, version, author, email, description, package, url):
         url=url)
 
 @run.command(help='Include additional functionality in the development environment')    
-@click.argument('module')
-def include(module):
-    python_dev.include.include(module)
+@click.argument('inclusion')
+def include(inclusion):
+    python_dev.include.include(inclusion)
 
 
 

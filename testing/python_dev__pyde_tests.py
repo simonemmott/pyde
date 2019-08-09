@@ -39,6 +39,7 @@ class PydeTests(TestCase):
             shutil.rmtree('new_module')
         try:
             result = runner.invoke(run, ['init', 'new_module'], input='VERSION{sep}AUTHOR{sep}EMAIL{sep}DESCRIPTION{sep}PACKAGE{sep}URL{sep}'.format(sep=os.linesep))
+            self.assertEqual(0, result.exit_code)
             self.assertTrue(os.path.exists('new_module'), 'Module directory not created')
             self.assertTrue(os.path.exists(os.path.sep.join(['new_module', '__init__.py'])), '__init__.py not created in module directory')
             self.assertTrue(os.path.exists(os.path.sep.join(['new_module', 'about.py'])), 'about.py not created in module directory')
@@ -124,7 +125,19 @@ class PydeTests(TestCase):
         self.assertEqual(0, result.exit_code, 'Include command failed')
         mock_include.assert_called_once_with('INCLUDE')
         
-        
+    def test_get_module_metadata(self):
+        meta = pyde.get_module_metadata(os.path.sep.join(['testing', 'test_environments', 'get_module_metadata']))
+        self.assertEqual('main', meta.root_module)
+        self.assertEqual('VERSION', meta.about.version)
+        self.assertEqual('AUTHOR', meta.about.author)
+        self.assertEqual('AUTHOR_EMAIL', meta.about.author_email)
+        self.assertEqual('DESCRIPTION', meta.about.description)
+        self.assertEqual('PACKAGE', meta.about.package)
+        self.assertEqual('URL', meta.about.url)
+        self.assertEqual('NEW', meta.about.somthing_new)
+        self.assertEqual(2, len(meta.modules))
+        self.assertTrue('main' in meta.modules)
+        self.assertTrue('other_module' in meta.modules)
         
         
         

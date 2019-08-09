@@ -16,11 +16,29 @@ The `pyde` CLI makes opinionated decisions about how to structure
 
 ## The pyde Command Line Interface
 The `pyde` CLI provides facilities for standardising python development environments.
+By default the `pyde` CLI works on modules in the current working directory. This can be changed with the `--target` option
+
 The `pyde` CLI implements help options `--help` for all the commands
 To get help on the `pyde` command
+
 ```
 pyde --help
 ```
+
+or
+
+```
+pyde <command> --help
+```
+
+The `pyde` CLI includes the following options:
+
+Option    | Description
+----------|--------------
+--help    | Show help on the about command and exit
+--target  | Set the directory that the `pyde` command should update
+
+
 
 The `pyde` CLI includes the following sub commands:
 
