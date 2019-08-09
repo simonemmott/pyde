@@ -25,7 +25,13 @@ def _get_include_control(dir):
 def _include_dir(templates_dir, template_loc, as_dir):
     inclusion_loc = os.path.sep.join([templates_dir, template_loc])
     control = _get_include_control(inclusion_loc)
-    os.mkdir(as_dir)
+    if os.path.exists(as_dir) and os.path.isfile(as_dir):
+        print('{dir} exists and is a file. Skipping'.format(dir=as_dir))
+        return
+    elif os.path.exists(as_dir) and os.path.isdir(as_dir):
+        print('The directory {dir} already exists.'.format(dir=as_dir))
+    else:
+        os.mkdir(as_dir)
     for name in _get_included_files(inclusion_loc):
         if name in control:
             pass
@@ -39,11 +45,15 @@ def _include_dir(templates_dir, template_loc, as_dir):
                 _include_dir(templates_dir, template_loc, as_file)
         
 
-def _include_file(template_loc, as_file):
+def _include_file(template_loc, as_file, data=None):
     template = jinja2.env.get_template(template_loc)
-    with open(as_file, 'w') as fp:
-        print('Writing template {name} to {file}'.format(name=template_loc, file=as_file))
-        fp.write(template.render(meta=pyde.meta))
+    if os.path.exists(as_file):
+        print('The included file {file} already exist. Skipping'.format(file=as_file))
+    else:
+        with open(as_file, 'w') as fp:
+            print('Writing template {name} to {file}'.format(name=template_loc, file=as_file))
+            fp.write(template.render(meta=pyde.meta, data=data))
+            
 
 def include(inclusion):
     templates_dir = _get_templates_dir(inclusion)
