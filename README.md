@@ -70,6 +70,7 @@ outputs
 ```
 
 The about command includes the following options
+
 Option    | Description
 ----------|--------------
 --help    | Show help on the about command and exit
@@ -91,6 +92,7 @@ If the module directory already exists or the `about.py` already exists then the
 Unless given through the command options the init command prompts the user for the about values.
 
 The about command includes the following options
+
 Option        | Description
 --------------|--------------
 --help        | Show help on the about command and exit
