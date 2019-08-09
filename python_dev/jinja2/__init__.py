@@ -3,6 +3,7 @@ import os
 import os.path
 import inspect
 import logging
+import python_dev.utils
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -17,15 +18,20 @@ _templates = [_get_template_location()]
 def add_templates(*additional_templates):
     _templates.extend(additional_templates)
     
-def secret(length=30):
-    return ''.join(random.choice('abcdefghighjklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') for i in range(length))
 
 def environment(**options):
     options['trim_blocks'] = options.get('trim_blocks', True)
     options['lstrip_blocks'] = options.get('lstrip_blocks', True)
     env = Environment(**options)
     env.globals.update({
-        'secret': secret,
+        'secret': python_dev.utils.secret,
+        'to_snake_case': python_dev.utils.to_snake_case,
+        'to_kebab_case': python_dev.utils.to_kebab_case,
+        'to_camel_case': python_dev.utils.to_camel_case,
+        'to_class_case': python_dev.utils.to_class_case,
+        'to_sentence_case': python_dev.utils.to_sentence_case,
+        'to_title_case': python_dev.utils.to_title_case,
+        'to_plural': python_dev.utils.to_plural
     })
     return env
 

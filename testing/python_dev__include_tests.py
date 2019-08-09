@@ -42,16 +42,16 @@ class IncludeTests(TestCase):
     def tearDown(self):
         pass
     
-    def test_get_include_dir_throws_value_error_if_no_inclusion_found(self):
+    def test_get_templates_dir_throws_value_error_if_no_inclusion_found(self):
         with self.assertRaisesRegex(ValueError, "No inclusion found for: 'XXXX'"):
-            include._get_include_dir('XXXX')
+            include._get_templates_dir('XXXX')
         
-    def test_get_include_dir_passes_if_inclusion_found(self):
-        expected = os.path.sep.join([os.getcwd(), 'python_dev', 'jinja2', 'templates', 'include', 'logging'])
-        self.assertEqual(expected, include._get_include_dir('logging'))
+    def test_get_templates_dir_passes_if_inclusion_found(self):
+        expected = os.path.sep.join([os.getcwd(), 'python_dev', 'jinja2', 'templates'])
+        self.assertEqual(expected, include._get_templates_dir('logging'))
         
     def test_get_included_files(self):
-        included = include._get_included_files('logging')
+        included = include._get_included_files(os.path.sep.join(['python_dev', 'jinja2', 'templates', 'include', 'logging']))
         self.assertEqual(2, len(included))
         self.assertTrue('logger.py' in included)
         self.assertTrue('logging.yaml' in included)

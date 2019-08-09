@@ -50,4 +50,3 @@ class Jinja2Tests(TestCase):
 
 
 
-

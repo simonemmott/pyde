@@ -1,3 +1,4 @@
 PyYAML
 Click
 Jinja2
+python-string-utils

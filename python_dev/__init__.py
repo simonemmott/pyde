@@ -4,12 +4,43 @@ import re
 import importlib.util
 import logging
 logger = logging.getLogger(__name__)
+from python_dev import utils
+
+class About(object):
+    def __init__(self, **kw):
+        self.package=kw.get('package')
+        self.version=kw.get('version')
+        self.author=kw.get('author')
+        self.author_email=kw.get('author_email')
+        self.description=kw.get('description')
+        self.url=kw.get('url')
+        
+class Module(object):
+    def __init__(self, **kw):
+        self.meta=kw.get('meta')
+        self.name=kw.get('name')
+        
+    def testing_module_name(self):
+        return '{name}_tests'.format(name=self.name)
+    
+    def testing_class_name(self):
+        return '{name}Tests'.format(name=util.to_class_case(self.name))
+
+class Meta(object):
+    def __init__(self, **kw):
+        self.root_module = kw.get('root_module', None)
+        self.modules = kw.get('modules', [])
+        self.about = kw.get('about', About())
+        
+    def module(self, name=None):
+        if not name:
+            name = self.root_module
+        if name not in self.modules:
+            raise ValueError('No module exists with name {name}'.format(name=name))
+        return Module(meta=self, name=name)
 
 def get_module_metadata(install_dir):
-    class Meta(object):
-        pass
     meta = Meta()
-    meta.modules = []
     for file in os.listdir(install_dir):
         file_path = os.path.sep.join([install_dir, file])
         if os.path.isdir(file_path):
