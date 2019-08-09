@@ -1,13 +1,16 @@
 from unittest import TestCase
 from unittest.mock import patch
+import python_dev
 from python_dev import jinja2
 import os
 import os.path
+
 
 class Dummy(object):
     def __init__(self, **kw):
         for key, value in kw.items():
             setattr(self, key, value)
+
 
 class Jinja2Tests(TestCase):
     

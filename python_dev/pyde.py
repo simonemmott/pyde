@@ -35,6 +35,7 @@ def about(version):
         click.echo('#####################################')
         
 def _write_about(about_py, version=None, author=None, email=None, description=None, package=None, url=None):
+    logger.debug('_write_about')
     if not os.path.exists(about_py):
         open(about_py, 'w').close()
     with open(about_py, 'r') as fp:
