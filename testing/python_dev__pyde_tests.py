@@ -1,4 +1,5 @@
 from unittest import TestCase
+from unittest.mock import patch
 import os
 import os.path
 from python_dev import pyde
@@ -115,11 +116,13 @@ class PydeTests(TestCase):
         self.assertTrue("description = 'DESCRIPTION'"+os.linesep in about, 'Description not written to about correctly')
         self.assertTrue("package = 'PACKAGE'"+os.linesep in about, 'Package not written to about correctly')
         self.assertTrue("url = 'URL'"+os.linesep in about, 'URL not written to about correctly')
-        
-    def test_pyde_includes_include_command(self):
+    
+    @patch('python_dev.include.include')  
+    def test_pyde_includes_include_command(self, mock_include):
         runner = CliRunner()
         result = runner.invoke(run, ['include', 'INCLUDE'])
         self.assertEqual(0, result.exit_code, 'Include command failed')
+        mock_include.assert_called_once_with('INCLUDE')
         
         
         

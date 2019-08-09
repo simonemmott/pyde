@@ -2,6 +2,7 @@ import click
 import os
 import os.path
 from python_dev import about as about_pyde
+import python_dev.include
 import logging
 import re
 
@@ -110,7 +111,7 @@ def init(module, version, author, email, description, package, url):
 @run.command(help='Include additional functionality in the development environment')    
 @click.argument('module')
 def include(module):
-    pass   
+    python_dev.include.include(module)
 
 
 
