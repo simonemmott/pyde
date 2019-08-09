@@ -1,0 +1,6 @@
+package='python_developer'
+version='0.0.0'
+author='Simon Emmott'
+author_email='simon.emmott@yahoo.co.uk'
+description='A utility for automating and standardising python development environments'
+url='https://github.com/simonemmott/python_developer'

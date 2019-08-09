@@ -1,0 +1,7 @@
+/.pydevproject
+*.pyc
+build/*
+dist/*
+htmlcov/*
+**/__pycache__
+*.egg-info/*
