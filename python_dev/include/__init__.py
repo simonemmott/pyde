@@ -27,13 +27,16 @@ def _include_dir(templates_dir, template_loc, as_dir):
     control = _get_include_control(inclusion_loc)
     os.mkdir(as_dir)
     for name in _get_included_files(inclusion_loc):
-        template_loc = os.path.sep.join([template_loc, name])
-        file_path = os.path.sep.join([templates_dir, template_loc])
-        as_file = os.path.sep.join([as_dir, name])
-        if os.path.isfile(file_path):
-            _include_file(template_loc, as_file)
-        elif os.path.isdir(file_path):
-            _include_dir(templates_dir, template_loc, as_file)
+        if name in control:
+            pass
+        else:
+            template_loc = os.path.sep.join([template_loc, name])
+            file_path = os.path.sep.join([templates_dir, template_loc])
+            as_file = os.path.sep.join([as_dir, name])
+            if os.path.isfile(file_path):
+                _include_file(template_loc, as_file)
+            elif os.path.isdir(file_path):
+                _include_dir(templates_dir, template_loc, as_file)
         
 
 def _include_file(template_loc, as_file):
@@ -48,13 +51,16 @@ def include(inclusion):
     included = _get_included_files(inclusion_loc)
     control = _get_include_control(inclusion_loc)
     for name in included:
-        template_loc = os.path.sep.join(['include', inclusion, name])
-        file_path = os.path.sep.join([templates_dir, template_loc])
-        as_file = os.path.sep.join([pyde.install_dir, name])
-        if os.path.isfile(file_path):
-            _include_file(template_loc, as_file)
-        elif os.path.isdir(file_path):
-            _include_dir(templates_dir, template_loc, as_file)
+        if name in control:
+            pass
+        else:
+            template_loc = os.path.sep.join(['include', inclusion, name])
+            file_path = os.path.sep.join([templates_dir, template_loc])
+            as_file = os.path.sep.join([pyde.install_dir, name])
+            if os.path.isfile(file_path):
+                _include_file(template_loc, as_file)
+            elif os.path.isdir(file_path):
+                _include_dir(templates_dir, template_loc, as_file)
 
         
 
