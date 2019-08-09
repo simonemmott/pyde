@@ -24,12 +24,13 @@ pyde --help
 
 The `pyde` CLI includes the following sub commands:
 
-Sub command | Description
-------------|----------------
-about       | Show information about the `pyde` command
-init        | Initialise a new development environment
+Sub command             | Description
+------------------------|----------------
+[about](#about-command) | Show information about the `pyde` command
+[init](#init-command)   | Initialise a new development environment
 
 ### About Command
+
 The about command output details about the `pyde` CLI
 
 ```
@@ -75,6 +76,7 @@ Option    | Description
 --version | Show the version of the `pyde` command
 
 ### Init Command
+
 The Init command initialises a new development environment for the given module name
 ```
 pyde init my_module
