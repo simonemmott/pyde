@@ -106,3 +106,34 @@ def init(module, version, author, email, description, package, url):
         description=description,
         package=package,
         url=url)
+
+@run.command(help='Include additional functionality in the development environment')    
+@click.argument('module')
+def include(module):
+    pass   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -116,5 +116,42 @@ class PydeTests(TestCase):
         self.assertTrue("package = 'PACKAGE'"+os.linesep in about, 'Package not written to about correctly')
         self.assertTrue("url = 'URL'"+os.linesep in about, 'URL not written to about correctly')
         
+    def test_pyde_includes_include_command(self):
+        runner = CliRunner()
+        result = runner.invoke(run, ['include', 'INCLUDE'])
+        self.assertEqual(0, result.exit_code, 'Include command failed')
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
 
