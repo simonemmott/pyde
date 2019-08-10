@@ -58,7 +58,8 @@ class PydeTests(TestCase):
         
     def test_get_module_metadata(self):
         meta = pyde.get_module_metadata(os.path.sep.join(['testing', 'test_environments', 'get_module_metadata']))
-        self.assertEqual('main', meta.root_module)
+        self.assertEqual('main', meta.root_module.name)
+        self.assertEqual('main', meta.name)
         self.assertEqual('VERSION', meta.about.version)
         self.assertEqual('AUTHOR', meta.about.author)
         self.assertEqual('AUTHOR_EMAIL', meta.about.author_email)
@@ -67,8 +68,8 @@ class PydeTests(TestCase):
         self.assertEqual('URL', meta.about.url)
         self.assertEqual('NEW', meta.about.somthing_new)
         self.assertEqual(2, len(meta.modules))
-        self.assertTrue('main' in meta.modules)
-        self.assertTrue('other_module' in meta.modules)
+        self.assertTrue('main' in [module.name for module in meta.modules])
+        self.assertTrue('other_module' in [module.name for module in meta.modules])
         
         
         
