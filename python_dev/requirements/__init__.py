@@ -42,6 +42,7 @@ class Requirement(object):
             self.hash = kw.get('hash')
         self.upper_operator = None
         self.upper_version = None
+        self.hash = None
         if self.version and ',' in self.version:
             upper_bound = self.version.split(',')[1].strip()
             self.version = self.version.split(',')[0].strip()

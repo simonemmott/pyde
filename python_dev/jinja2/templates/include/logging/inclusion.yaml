@@ -1,2 +1,5 @@
 check: python_dev.logging.check_includes
 
+requires:
+  - package: pyYaml
+

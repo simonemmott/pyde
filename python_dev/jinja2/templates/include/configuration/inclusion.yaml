@@ -1,4 +1,8 @@
 check: python_dev.configuration.check_includes
+
+requires: 
+  - package: pyYaml
+  
 root_module:
   name: '{{meta.name}}'
 
