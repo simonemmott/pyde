@@ -1,5 +1,6 @@
 from python_dev import jinja2
 from python_dev import pyde
+from python_dev import requirements
 import yaml
 import os.path
 import importlib
@@ -134,6 +135,13 @@ def include(inclusion):
     inclusion_loc = os.path.sep.join([templates_dir, 'include', inclusion])
     included = _get_included_files(inclusion_loc)
     control = _get_include_control(inclusion_loc)
+    if 'requires' in control:
+        requires = control['requires']
+        for require in requires:
+            requirements.add_requirement(
+                package=require['package'], 
+                version=require.get('version'),
+                operator=require.get('operator'))
     for name in included:
         template_name = os.path.sep.join(['include', inclusion, name])
         file_path = os.path.sep.join([templates_dir, template_name])

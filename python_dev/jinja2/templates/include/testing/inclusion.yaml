@@ -1,2 +1,4 @@
 check: python_dev.include.check_includes
+requires:
+  - package: coverage
 
