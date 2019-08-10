@@ -3,10 +3,13 @@ import os.path
 
 class Requirement(object):
     def __init__(self, line=None, **kw):
+        self.upper_operator = None
+        self.upper_version = None
+        self.hash = None
         if line:
             if '--hash' in line:
                 self.hash = line.split('--hash')[1].strip()[1:].strip()
-                line = line.split('--hash')[1].strip()
+                line = line.split('--hash')[0].strip()
             if '~=' in line:
                 self.package = line.split('~=')[0].strip()
                 self.version = line.split('~=')[1].strip()
@@ -40,9 +43,6 @@ class Requirement(object):
             self.version = kw.get('version')
             self.operator = kw.get('operator')
             self.hash = kw.get('hash')
-        self.upper_operator = None
-        self.upper_version = None
-        self.hash = None
         if self.version and ',' in self.version:
             upper_bound = self.version.split(',')[1].strip()
             self.version = self.version.split(',')[0].strip()

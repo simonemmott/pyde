@@ -62,7 +62,7 @@ class IncludeTests(TestCase):
         _clear_dir(pyde.install_dir)
         include.include('logging')
         included = os.listdir(pyde.install_dir)
-        self.assertEqual(2, len(included))
+        self.assertEqual(3, len(included))
         self.assertTrue('logging.yaml' in included)
         self.assertTrue('logger.py' in included)
         assert_in_file(os.path.sep.join([pyde.install_dir, 'logging.yaml']),'  ROOT_MODULE:')
