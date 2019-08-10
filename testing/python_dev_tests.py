@@ -7,6 +7,12 @@ import python_dev
 
 class PythonDevTests(TestCase):
 
+    def setUp(self):
+        self.cwd = os.getcwd()
+        
+    def tearDown(self):
+        os.chdir(self.cwd)
+        
     def test_update_about(self):
         os.chdir('testing/test_environments/update_module_test')
         with open(os.path.sep.join(['update_module', 'about.py']), 'w') as fp:

@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 from python_dev import requirements
+import os
 
 
 class RequirementsTests(TestCase):

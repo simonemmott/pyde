@@ -3,7 +3,7 @@
 Author Simon Emmott - O698609
 
 ## Installation
-The json_model module is available in the package 'python_develop' and can be installed using pip
+The python_dev module is available in the package 'python_develop' and can be installed using pip
 ```
 pip install python_develop
 ```
