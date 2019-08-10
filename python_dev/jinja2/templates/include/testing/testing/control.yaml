@@ -1,3 +1,4 @@
 module_tests.py:
-  data: meta.modules
-  name: '{{meta.module(data).testing_module_name()}}.py'
+  path: modules
+  name: '{{item.testing_module_name()}}.py'
+
