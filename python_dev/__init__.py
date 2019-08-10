@@ -37,6 +37,10 @@ class Meta(Finder):
         self.about = kw.get('about', About())
         self.includes = kw.get('includes', [])
         
+    @property
+    def name(self):
+        return self.root_module.name
+        
     def module(self, name=None):
         if not name:
             name = self.root_module.name

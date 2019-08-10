@@ -1,0 +1,7 @@
+check: python_dev.configuration.check_includes
+root_module:
+  name: '{{meta.name}}'
+
+config.ini:
+  name: '{{meta.name}}.ini'
+

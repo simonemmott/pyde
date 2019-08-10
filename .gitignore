@@ -3,5 +3,6 @@
 build/*
 dist/*
 htmlcov/*
+dummy/*
 **/__pycache__
 *.egg-info/*

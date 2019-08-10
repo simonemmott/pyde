@@ -4,7 +4,7 @@ import yaml
 import os.path
 import importlib
 
-control_name = 'control.yaml'
+control_name = 'inclusion.yaml'
 
 class Inclusion(object):
     def __init__(self, **kw):
@@ -89,16 +89,28 @@ def _include_dir(templates_dir, template_loc, as_dir):
         template_name = os.path.sep.join([template_loc, name])
         file_path = os.path.sep.join([templates_dir, template_name])
         if name in control:
-            name_template = control[name]['name']
-            data_path = control[name]['path']
-            data = pyde.meta.__find__(data_path)
-            for item in data:
-                item_name = jinja2.env.from_string(name_template).render(meta=pyde.meta, item=item)
-                as_file = os.path.sep.join([as_dir, item_name])
+            if 'name' in control[name]:
+                name_template = control[name]['name']
+            else:
+                name_template = name
+            if 'path' in control[name]:
+                data_path = control[name]['path']
+                data = pyde.meta.__find__(data_path)
+                for item in data:
+                    item_name = jinja2.env.from_string(name_template).render(meta=pyde.meta, item=item)
+                    as_file = os.path.sep.join([as_dir, item_name])
+                    if os.path.isfile(file_path):
+                        _include_file(template_name, as_file, item=item)
+                    elif os.path.isdir(file_path):
+                        _include_dir(templates_dir, template_name, as_file)
+            else:
+                name = jinja2.env.from_string(name_template).render(meta=pyde.meta)
+                as_file = os.path.sep.join([as_dir, name])
                 if os.path.isfile(file_path):
                     _include_file(template_name, as_file)
                 elif os.path.isdir(file_path):
                     _include_dir(templates_dir, template_name, as_file)
+                
         else:
             as_file = os.path.sep.join([as_dir, name])
             if os.path.isfile(file_path):
@@ -126,17 +138,27 @@ def include(inclusion):
         template_name = os.path.sep.join(['include', inclusion, name])
         file_path = os.path.sep.join([templates_dir, template_name])
         if name in control:
-            name_template = control[name]['name']
-            data_path = control[name]['path']
-            data = pyde.meta.__find__(data_path)
-            for item in data:
-                item_name = jinja2.env.from_string(name_template).render(meta=pyde.meta, item=item)
-                as_file = os.path.sep.join([as_dir, item_name])
+            if 'name' in control[name]:
+                name_template = control[name]['name']
+            else:
+                name_template = name
+            if 'path' in control[name]:
+                data_path = control[name]['path']
+                data = pyde.meta.__find__(data_path)
+                for item in data:
+                    item_name = jinja2.env.from_string(name_template).render(meta=pyde.meta, item=item)
+                    as_file = os.path.sep.join([pyde.install_dir, item_name])
+                    if os.path.isfile(file_path):
+                        _include_file(template_name, as_file, item=item)
+                    elif os.path.isdir(file_path):
+                        _include_dir(templates_dir, template_name, as_file)
+            else:
+                name = jinja2.env.from_string(name_template).render(meta=pyde.meta)
+                as_file = os.path.sep.join([pyde.install_dir, name])
                 if os.path.isfile(file_path):
                     _include_file(template_name, as_file)
                 elif os.path.isdir(file_path):
-                    _include_dir(templates_, template_name, as_file)
-            
+                    _include_dir(templates_dir, template_name, as_file)            
         else:
             as_file = os.path.sep.join([pyde.install_dir, name])
             if os.path.isfile(file_path):
