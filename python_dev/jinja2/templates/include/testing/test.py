@@ -15,9 +15,12 @@ if __name__ == '__main__':
 
 from testing import *
 import unittest
+
+{% 'logging' in if meta.includes %}
 from logger import configure_logging
 
 configure_logging()
+{% endif %}
 
 if __name__ == '__main__':
     unittest.main()

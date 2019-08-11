@@ -4,13 +4,15 @@ from importlib.resources import path
 import sys
 from pathlib import Path
 
+config_name = '{{meta.name}}'                   
+    
 def _default_config(config):
-    config[{{meta.name}}] = {
+    config[config_name] = {
     }
     
 def find(name):
     if not name or name == '':
-        raise ValueError('The name of the configuration file to be found must be supplied')
+        raise ValueError('The name of the file to be found must be supplied')
     if os.path.exists(name):
         return os.path.abspath(name)
     exec_path = Path(sys.executable).parent
@@ -26,13 +28,16 @@ def find(name):
         
 def read_config(name=None, env_key='{{meta.name.upper()}}_CFG'):
     config = configparser.ConfigParser()
-    if name:
-        config_name = name
-    else:
-        config_name = os.getenv(env_key, None)
-    if not config_name:
-        config_name = '{{meta.name}}.ini'       
-    path = find(config_name)
+    if not name:
+        name = os.getenv(env_key, None)
+    if not name:
+        name = config_name+'.ini'       
+    try:      
+        path = find(config_name)
+    except FileNotFoundError:
+        print('Unable to find configuration file: {file}. Using default config'.format(file=name))
+        _default_config(config)
+        return config
     try:
         config.read(path)
     except Exception as e:

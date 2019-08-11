@@ -34,13 +34,7 @@ default_config = {
     }
 }
 
-def get_logging_config(
-        config_path='logging.yaml',
-        config_format='YAML',
-        default_level=logging.INFO, 
-        env_key='LOG_CFG',
-        *args,
-        **kw):
+def get_logging_config(config_path='logging.yaml', config_format='YAML'):
     
     if os.path.exists(config_path):
         with open(config_path, 'rt') as f:

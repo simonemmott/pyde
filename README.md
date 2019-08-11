@@ -61,10 +61,11 @@ Sub command             | Description
 ------------------------|----------------
 [about](#about-command) | Show information about the `pyde` command
 [init](#init-command)   | Initialise a new development environment
+[include](.docs/inclusions.md)   | Initialise a new development environment
 
 ### About Command
 
-The about command output details about the `pyde` CLI
+The `about` command outputs details about the `pyde` CLI
 
 ```
 pyde about
@@ -111,7 +112,7 @@ Option    | Description
 
 ### Init Command
 
-The Init command initialises a new development environment for the given module name
+The `init` command initialises a new development environment for the given module name
 ```
 pyde init my_module
 ```
@@ -135,8 +136,6 @@ Option        | Description
 --description | Define the short description of the module
 --package     | Define the package which contains the module
 --url         | Define the url which documents the module
-
-
 
 
 
