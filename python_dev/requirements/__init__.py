@@ -3,8 +3,8 @@ import os.path
 
 class Requirement(object):
     def __init__(self, line=None, **kw):
-        self.upper_operator = None
-        self.upper_version = None
+        self.upper_operator = kw.get('upper_operator', None)
+        self.upper_version = kw.get('upper_version', None)
         self.hash = None
         if line:
             if '--hash' in line:
@@ -132,12 +132,24 @@ def get_requirements(requirements_txt):
         
     
 
-def add_requirement(package, version=None, operator=None, hash=None):
+def add_requirement(
+        package, 
+        version=None, 
+        operator=None, 
+        upper_version=None, 
+        upper_operator=None,
+        hash=None):
     from python_dev import pyde
     requirements_txt = os.path.sep.join([pyde.install_dir, 'requirements.txt'])
     requirements = get_requirements(requirements_txt)
     if not requirements.includes(package):
-        requirement = Requirement(package=package, version=version, operator=operator, hash=hash)
+        requirement = Requirement(
+            package=package, 
+            version=version, 
+            operator=operator,
+            upper_version=upper_version,
+            upper_operator=upper_operator, 
+            hash=hash)
         requirements.add(requirement)
         print('Adding requirement: {req}'.format(req=requirement.line()))
         requirements.write(requirements_txt)

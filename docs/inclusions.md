@@ -27,6 +27,10 @@ testing       | Add testing setup to the local development environment
 
 Inclusions are defined as jinja2 templates in the `include` directory of the defined jinja2 template locations.
 
+Additional inclusions can be defined by adding contents to the `include` directory of any of the configured jinja2 template locations.
+
+See [defining inclusions](.configuring_inclusions.md) for details on how to define additional inclusions.
+
 #### Configuration Inclusion
 
 The configuration inclusion adds a configuration file to the development package and a `configuration.py` to the `root_module`
@@ -61,7 +65,7 @@ The `logging.yaml` file is the default logging configuration file expected by `l
 
 To add logging to modules you should
 
-```
+```python
 import logging
 
 logger = logging.getLogger(__name__)
@@ -69,7 +73,7 @@ logger = logging.getLogger(__name__)
 
 And log messages by 
 
-```
+```python
 logger.info('Info message')
 ```
 
@@ -91,8 +95,110 @@ The logging inclusion adds the following requirements to the local development e
 
 #### Testing Inclusion
 
-The testing inclusion adds testing support
+The testing inclusion adds testing support to the local development environment.
 
+The testing inclusions adds the module `testing` to the root of the local development environment. This module is ignored when `pyde` scans the local development environment for modules in the meta data. The testing module will contain the test modules for the local development environment.
+
+The testing module is configured as a python barrel into which all the `TestCase` classes should be imported.
+
+**e.g.**
+
+Given the testing module structure of
+testing
+ - __init__.py
+ - module_a_tests.py
+    - ModuleATests(TestCase)
+ - module_b_tests.py
+    - ModuleBTests(TestCase)
+
+The `__inti__.py` of the `testing` module should contain
+
+```python
+from .module_a_tests import ModuleATests
+from .module_b_tests import ModuleBTests
+```
+
+The testing inclusions automatically creates test modules as sub modules of the `testing` module with a `TestCase` class for each module found in the local development environment and adds these modules and classes to the testing barrel.
+
+The testing inclusion adds the module `test.py` to the root of the local development environment.
+The `test.py` module should be executed to execute all the defined tests.
+
+**e.g.**
+
+```
+python test.py
+```
+
+will execute all the `TestCase` classes in the local development environment.
+
+The `test.py` executes the test cases using the `unittest.main()` method passing in the arguments passed to `test.py`.
+Test execution can be limited to a single test case by specify the name of the test case on the command line.
+
+**e.g.**
+
+```
+python test.py ModuleATests
+```
+
+will only execute the test case `ModuleATests`
+
+and
+
+```
+python test.py ModuleATests.test_some_cool_stuff
+```
+
+will only execute the test `test_some_cool_stuff` from the `ModuleATests` test case.
+
+The testing inclusion adds the module `settings.py`. The settings module includes attributes used in test execution.
+By default this module only contains the attribute `SKIP` with the value `True`.
+This allows tests to be optionally skipped using the `@unittest.skipIf(settings.SKIP, <message>)` decorator.
+
+This configuration will by default skip such decorated tests. It is possible to execute such decorated tests at execution time by adding the `--no-skip` option to the call to `test.py`
+
+**e.g.**
+
+```
+python test.py --no-skip
+```
+
+will execute all the tests in all the test cases including those decorated with the `@skipIf(...)` decorator.
+
+Unit tests should be decorated with the `@skipIf(...)` decorator if the tests invoke remote services which cannot be guaranteed to be available during automated builds. 
+Often such tests will require credential information or other details to be supplied at run time.
+
+The `test.py` module supports this requirement by allowing setting values to be defined at runtime. Any options passed to the `test.py` module are removed from the arguments passes to `unittest.main()` and instead are added to as attributes to the `settings.py` module.
+
+**e.g.**
+
+```
+python test.py --USER=username --PASSWORD=password
+```
+
+adds the attributes `USER` and `PASSWORD` to the `settings.py` module with the values 'username' and 'password' before executing the tests.
+
+The testing inclusion adds a requirement for `coverage` to the local development environment.
+The `coverage` package provides support for test coverage analysis.
+
+Test coverage is analysed by executing the `run` sub command of the ` coverage` executable.
+
+**e.g.**
+
+```
+coverage run test.py --no-skip
+```
+
+Will execute all the unit tests including the skipped tests and record the test coverage in a binary file `.coverage`. The test coverage can be exported as HTML and viewed in a browser.
+
+**e.g.**
+
+```
+coverage html
+```
+
+generates html pages detailing the test coverage in the directory `htmlcov`. The coverage report can be viewed in a browser by opening the file `htmlcov/index.html` in a browser.
+
+The `.gitingore` file by default is configured to ignore the `.coverage` file and the `htmlcov` directory.
 
 
 

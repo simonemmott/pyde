@@ -141,7 +141,10 @@ def include(inclusion):
             requirements.add_requirement(
                 package=require['package'], 
                 version=require.get('version'),
-                operator=require.get('operator'))
+                operator=require.get('operator'),
+                upper_version=require.get('upper_version'),
+                upper_operator=require.get('upper_operator'),
+                hash=require.get('hash'))
     for name in included:
         template_name = os.path.sep.join(['include', inclusion, name])
         file_path = os.path.sep.join([templates_dir, template_name])
