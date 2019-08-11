@@ -12,7 +12,22 @@ pip install python_develop
 
 The python_develop packages provides a Command Line Interface (CLI) `pyde` to standardise python development environments
 
-The `pyde` CLI makes opinionated decisions about how to structure 
+The `pyde` CLI makes opinionated decisions about how to structure python development projects.
+
+The `pyde` CLI uses jinja2 templates to generate source code in your development environment.
+
+The jinja2 templates are located in the package pyhton_dev.jinja2.templates.
+
+Access to the jinja2 environment is available from `python_dev.jinja2.env` 
+
+The `pyde` CLI examines your development environment and extracts [metadata](.docs/metadata.md) from the found python modules. This meta data is passed to the jinja2 templates as the variable `meta`.
+
+## See Also
+
+Title                         | Description
+------------------------------|-------------------------------------
+[Metadata](.docs/metadata.md) | The definition of the mata data extracted from your development environment
+[Inclusions](.docs/inclusions.md) | Details on the `pyde include` command.
 
 ## The pyde Command Line Interface
 The `pyde` CLI provides facilities for standardising python development environments.
