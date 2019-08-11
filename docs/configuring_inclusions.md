@@ -6,7 +6,7 @@ Inclusions are defined as sub directories of the `include` directory in the jinj
 
 The jinja2 template location structure shown below
 
-templates
+- templates
   - include
     - my_cool_inclusion
       - inclusion.yaml

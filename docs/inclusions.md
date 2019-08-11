@@ -104,12 +104,13 @@ The testing module is configured as a python barrel into which all the `TestCase
 **e.g.**
 
 Given the testing module structure of
-testing
- - __init__.py
- - module_a_tests.py
+- testing
+  - __init__.py
+  - module_a_tests.py
     - ModuleATests(TestCase)
- - module_b_tests.py
+  - module_b_tests.py
     - ModuleBTests(TestCase)
+ 
 
 The `__inti__.py` of the `testing` module should contain
 
