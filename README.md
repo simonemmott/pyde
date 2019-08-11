@@ -26,9 +26,9 @@ The `pyde` CLI examines your development environment and extracts [metadata](.do
 
 Title                         | Description
 ------------------------------|-------------------------------------
-[Metadata](.docs/metadata.md) | The definition of the mata data extracted from your development environment
-[Inclusions](.docs/inclusions.md) | Details on the `pyde include` command.
-[Configuring Inclusions](.docs/configuring_inclusions.md) | Details on how to define custom inclusions.
+[Metadata](docs/metadata.md) | The definition of the mata data extracted from your development environment
+[Inclusions](docs/inclusions.md) | Details on the `pyde include` command.
+[Configuring Inclusions](docs/configuring_inclusions.md) | Details on how to define custom inclusions.
 
 ## The pyde Command Line Interface
 The `pyde` CLI provides facilities for standardising python development environments.
@@ -62,7 +62,7 @@ Sub command             | Description
 ------------------------|----------------
 [about](#about-command) | Show information about the `pyde` command
 [init](#init-command)   | Initialise a new development environment
-[include](.docs/inclusions.md)   | Initialise a new development environment
+[include](docs/inclusions.md)   | Initialise a new development environment
 
 ### About Command
 

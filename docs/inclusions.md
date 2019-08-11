@@ -29,7 +29,7 @@ Inclusions are defined as jinja2 templates in the `include` directory of the def
 
 Additional inclusions can be defined by adding contents to the `include` directory of any of the configured jinja2 template locations.
 
-See [defining inclusions](.configuring_inclusions.md) for details on how to define additional inclusions.
+See [defining inclusions](configuring_inclusions.md) for details on how to define additional inclusions.
 
 #### Configuration Inclusion
 
