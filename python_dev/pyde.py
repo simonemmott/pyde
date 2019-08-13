@@ -2,7 +2,7 @@ import click
 import os
 import os.path
 from python_dev import about as about_pyde
-from python_dev import get_module_metadata, write_about
+from python_dev import get_module_metadata, write_about, load_open_api
 import python_dev.include
 import python_dev.init
 import logging
@@ -24,9 +24,9 @@ def run(target, api):
         global install_dir
         install_dir = target
     global meta
-    if api:
-        pass
     meta = get_module_metadata(install_dir)
+    if api:
+        meta.api = load_open_api(api)
 
 @run.command(help='Show about message and exit')
 @click.option('--version', is_flag=True, help='Show the version and exit')
