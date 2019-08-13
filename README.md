@@ -29,6 +29,7 @@ Title                         | Description
 [Metadata](docs/metadata.md) | The definition of the mata data extracted from your development environment
 [Inclusions](docs/inclusions.md) | Details on the `pyde include` command.
 [Configuring Inclusions](docs/configuring_inclusions.md) | Details on how to define custom inclusions.
+[OpenApi Support](docs/open_api_support.md) | Details on how `pyde` supports OpenApi.
 
 ## The pyde Command Line Interface
 The `pyde` CLI provides facilities for standardising python development environments.
