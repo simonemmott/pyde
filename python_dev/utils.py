@@ -1,5 +1,6 @@
 import string_utils as su
 import re
+import os.path
 
 def secret(length=30):
     return ''.join(random.choice('abcdefghighjklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') for i in range(length))
@@ -70,3 +71,9 @@ def to_plural(s):
         return s+'es'
 
     return s+'s'
+
+def build_path(*path):
+    return os.path.sep.join(list(path))
+
+def path_exists(*path):
+    return os.path.exists(build_path(*path))

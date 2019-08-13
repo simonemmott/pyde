@@ -68,10 +68,11 @@ name | str  | The name of the module.
 
 ### Methods
 
-Method      | Description
-------------|-------------------------
+Method                | Description
+----------------------|-------------------------
 testing_module_name() | The name of the testing module for the module
 testing_class_name()  | The name of the `TestCase` class for the module
+module_dir()          | The name of the module directory relative to the package root directory
 
 #### Method testing_module_name()
 
@@ -80,6 +81,10 @@ testing_class_name()  | The name of the `TestCase` class for the module
 #### Method testing_class_name()
 
 **Returns**: The name of the `TestCase` class for the module
+
+#### Method module_dir()
+
+**Returns**: The module directory relative to the package root directory
 
 
 

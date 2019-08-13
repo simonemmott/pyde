@@ -24,13 +24,7 @@ class Dummy(object):
 def assert_in_file(file, text, msg=None):
     with open(file, 'r') as fp:
         data = fp.read()
-    try:
-        assert text in data
-    except AssertionError:
-        print('{text} not in {file}{msg}'.format(
-            text=text,
-            file=file,
-            msg = '' if not msg else ': {msg}'.format(msg=msg)))
+    assert text in data, '' if not msg else ': {msg}'.format(msg=msg)
                 
             
 

@@ -41,6 +41,9 @@ def _configured_environment():
     for templates in _templates:
         loaders.append(FileSystemLoader(templates))
     return environment(loader=ChoiceLoader(loaders))
+
+def get_template(*path):
+    return env.get_template(os.path.sep.join(list(path)))
     
 
 env = _configured_environment()

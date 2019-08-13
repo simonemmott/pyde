@@ -64,6 +64,15 @@ def init(module, version, author, email, description, package, url):
 def include(inclusion):
     python_dev.include.include(inclusion)
 
+@run.group(help='Add additional items to the package being developed')    
+def add():
+    python_dev.add.add()
+    
+    
+from python_dev import add as imported_add
+
+
+
 
 
 

@@ -71,6 +71,17 @@ class PydeTests(TestCase):
         self.assertTrue('main' in [module.name for module in meta.modules])
         self.assertTrue('other_module' in [module.name for module in meta.modules])
         
+    def test_pyde_includes_add_command(self):
+        runner = CliRunner()
+        result = runner.invoke(run, ['add', '--help'])
+        self.assertEqual(0, result.exit_code, 'Add command failed')
+        
+    def test_pyde_includes_add_model_command(self):
+        runner = CliRunner()
+        result = runner.invoke(run, ['add', 'model', 'MODEL'])
+        self.assertEqual(0, result.exit_code, 'add model command failed')
+
+        
         
         
         

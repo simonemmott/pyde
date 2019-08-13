@@ -29,6 +29,9 @@ class Module(object):
     
     def testing_class_name(self):
         return '{name}Tests'.format(name=utils.to_class_case(self.name))
+    
+    def module_dir(self):
+        return os.path.sep.join(self.name.split('.'))
 
 class Meta(Finder):
     def __init__(self, **kw):
