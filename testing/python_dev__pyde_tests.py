@@ -78,8 +78,13 @@ class PydeTests(TestCase):
         
     def test_pyde_includes_add_model_command(self):
         runner = CliRunner()
-        result = runner.invoke(run, ['add', 'model', 'MODEL'])
+        result = runner.invoke(run, ['add', 'model', '--help'])
         self.assertEqual(0, result.exit_code, 'add model command failed')
+
+    def test_pyde_includes_api_option(self):
+        runner = CliRunner()
+        result = runner.invoke(run, ['--api=OPENAPI', 'add', '--help'])
+        self.assertEqual(0, result.exit_code, '--api option not accepted')
 
         
         

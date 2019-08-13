@@ -1,7 +1,4 @@
 from json_model import JsonModel
-from .schema import Schema
-from .media_type import MediaType
-from .reference import Reference
 
 class Header(JsonModel):
     description = JsonModel.field(str)
@@ -11,7 +8,7 @@ class Header(JsonModel):
     style = JsonModel.field(str)
     explode = JsonModel.field(bool)
     allowReserved = JsonModel.field(bool)
-    schema = JsonModel.field(Schema)
-    content = JsonModel.dict(MediaType)
+    schema = JsonModel.field('json_api.model.Schema')
+    content = JsonModel.dict('json_api.model.MediaType')
 
 

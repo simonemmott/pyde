@@ -17,6 +17,7 @@ modules     | [Module] | A list of Module instances holding the metadata of all 
 about       | About | The data extracted from `about.py`
 includes    | [str] | A list of the names of the included modules.
 name        | str   | The name of the module taken from the name of the root module `meta.root_module.name`
+api         | OpenApi   | The data from the defined Open API JSON document 
 
 ### Methods
 

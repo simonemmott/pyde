@@ -3,6 +3,7 @@ import os
 import logging
 import json
 import python_dev
+from python_dev import utils
 
 
 class PythonDevTests(TestCase):
@@ -44,4 +45,80 @@ class PythonDevTests(TestCase):
         self.assertTrue("package = 'PACKAGE'"+os.linesep in about, 'Package not written to about correctly')
         self.assertTrue("url = 'URL'"+os.linesep in about, 'URL not written to about correctly')
 
+    def test_load_location_returns_empty_dict_if_location_not_found(self):
+        data = python_dev.load_location('XXXX')
+        self.assertEqual({}, data, 'Empty dict not returned by load_location')
 
+    def test_load_location_returns_dict_from_json_file(self):
+        data = python_dev.load_location(utils.build_path('testing', 'test_environments', 'load_location', 'test_load.json'))
+        expected = {
+            'name': 'NAME',
+            'description': 'DESCRIPTION'
+        }
+        self.assertEqual(expected, data, 'Loaded dict not returned by load_location')
+
+    def test_load_location_returns_dict_from_yaml_file(self):
+        data = python_dev.load_location(utils.build_path('testing', 'test_environments', 'load_location', 'test_load.yaml'))
+        expected = {
+            'name': 'NAME',
+            'description': 'DESCRIPTION'
+        }
+        self.assertEqual(expected, data, 'Loaded dict not returned by load_location')
+
+    def test_load_location_returns_dict_from_ini_file(self):
+        data = python_dev.load_location(utils.build_path('testing', 'test_environments', 'load_location', 'test_load.ini'))
+        expected = {
+            'DEFAULT': {
+            },
+            'group 1': {
+                'name': 'NAME',
+                'description': 'DESCRIPTION'
+            },
+            'group 2': {
+                'foo': 'bar'
+            }
+        }
+        self.assertEqual(expected, data, 'Loaded config not returned by load_location')
+
+    def test_load_location_returns_dict_from_url(self):
+        data = python_dev.load_location('http://echo.jsontest.com/key/value/one/two')
+        expected = {
+            'one': 'two',
+            'key': 'value'
+        }
+        self.assertEqual(expected, data, 'Loaded url not returned by load_location')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       

@@ -6,6 +6,11 @@ import logging
 logger = logging.getLogger(__name__)
 from python_dev import utils
 from json_model import Finder
+import json
+import yaml
+import configparser
+import requests
+from http import HTTPStatus
 
 
 ignore_dirs = ['^testing$', '^htmlcov$', '^build$', '^dist$', '^__.*', '.*.egg-info$']
@@ -39,6 +44,7 @@ class Meta(Finder):
         self.modules = kw.get('modules', [])
         self.about = kw.get('about', About())
         self.includes = kw.get('includes', [])
+        self.api = None
         
     @property
     def name(self):
@@ -129,4 +135,82 @@ def write_about(about_py, version=None, author=None, email=None, description=Non
     with open(about_py, 'w') as fp:
         for line in output:
             fp.write(line)
+            
+def _load_url(url):
+    resp = requests.get(url)
+    if resp.status_code != HTTPStatus.OK:
+        logger.warning('Unable to get location: {url}'.format(url=url))
+    else:
+        if url[-5:].lower() == '.json':
+            try:
+                return resp.json()
+            except:
+                logger.warning('Unable to get {url} as JSON'.format(url=url))
+        if url[-5:].lower() == '.yaml' or url[-4:].lower() == '.yml':
+            try:
+                return yaml.load(resp.content)
+            except:
+                logger.warning('Unable to get {url} as YAML'.format(url=url))                
+        else:
+            try:
+                logger.warning('Unknown data format at location: {url}. Trying JSON'.format(url=url))
+                return resp.json()
+            except:
+                logger.warning('Unable to get location: {url} as JSON'.format(url=url))
+    return {}
 
+def _load_json(location):
+    try:
+        with open(location, 'r') as fp:
+            return json.load(fp)
+    except:
+        logger.warning('Unable to load {loc} as JSON'.format(loc=location))
+    return {}
+
+def _load_yaml(location):
+    try:
+        with open(location, 'r') as fp:
+            return yaml.safe_load(fp)
+    except:
+        logger.warning('Unable to load {loc} as YAML'.format(loc=location))
+    return {}
+
+def _load_ini(location):         
+    try:
+        config = configparser.ConfigParser()
+        config.read(location)
+        data = {}
+        for key, values in config.items():
+            data[key] = {}
+            for item, value in values.items():
+                data[key][item] = value
+        return data
+    except:
+        logger.warning('Unable to load {loc} as INI'.format(loc=location))
+    return {}           
+    
+
+def load_location(location):
+    if '://' in location:
+        return _load_url(location)
+    if not os.path.exists(location):
+        logger.warning('Unable to find the file: {loc}'.format(loc=location))
+        return {}
+    else:
+        if location[-5:].lower() == '.json':
+            return _load_json(location)
+        if location[-5:].lower() == '.yaml' or location[-4:].lower() == '.yml':
+            return _load_yaml(location)
+        if location[-4:].lower() == '.ini':
+            return _load_ini(location)
+        else:
+            logger.warning('Unknown data format at location: {loc}. Trying JSON'.format(loc=location))
+            return _load_json(location)
+
+    
+    
+    
+    
+    
+    
+    

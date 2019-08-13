@@ -18,11 +18,14 @@ meta = None
 
 @click.group()
 @click.option('--target', help='Set the target directory')
-def run(target):
+@click.option('--api', help='Set location of the OpenAPI JSON file')
+def run(target, api):
     if target:
         global install_dir
         install_dir = target
     global meta
+    if api:
+        pass
     meta = get_module_metadata(install_dir)
 
 @run.command(help='Show about message and exit')

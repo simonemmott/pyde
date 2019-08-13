@@ -53,6 +53,7 @@ Option    | Description
 ----------|--------------
 --help    | Show help on the about command and exit
 --target  | Set the directory that the `pyde` command should update
+--api     | Set the location of the Open API document to read. The loaded meta data will be available in the api attribute of the meta data.
 
 
 

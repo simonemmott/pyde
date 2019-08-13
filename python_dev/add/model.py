@@ -32,15 +32,24 @@ def _create_model_module(model_dir, schema):
         raise FileExistsError('The model module {m} already exists'.format(m=model_module_file))
     template = jinja2.get_template('add', 'model', 'model.py')
     with open(model_module_file, 'w') as fp:
-        print('Adding model {name} in {file}'.format(name=model, file=model_module_file))
+        print('Adding model {name} in {file}'.format(name=schema.title, file=model_module_file))
         fp.write(template.render(schema=schema, meta=pyde.meta))
         
 def _add_model_to_barrel(model_dir, schema):
     model_init = utils.build_path(model_dir, '__init__.py')
-    with open(model_init, 'a') as fp:
-        fp.write('from .{module} import {cls}'.format(
-            module=schema.module_name(), 
-            cls=schema.class_name())+os.linesep)
+    with open(model_init, 'r') as fp:
+        init = fp.readlines()
+    with open(model_init, 'w') as fp:
+        added = False
+        for line in init:
+            if len(line.strip()) == 0 and not added:
+                fp.write('from .{module} import {cls}'.format(
+                    module=schema.module_name(), 
+                    cls=schema.class_name())+os.linesep)
+                fp.write(os.linesep)
+                added = True
+            else:
+                fp.write(line+os.linesep)
     
 
 def _model(model):

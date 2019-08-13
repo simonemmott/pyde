@@ -1,5 +1,4 @@
 from json_model import unpack_data_types
-
 from .callback import Callback
 from .components import Components
 from .contact import Contact

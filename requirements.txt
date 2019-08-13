@@ -3,3 +3,4 @@ Click
 Jinja2
 python-string-utils
 gti-spe-lib-json-model
+requests
