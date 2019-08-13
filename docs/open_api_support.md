@@ -19,8 +19,23 @@ Causes the JSON document `myApi.json` to be loaded into the `meta.api` attribute
 The value of the `--api` option can be.
 
 1. A file in the local file system relative to the current working directory.
+
+```
+pyde --api=myApi.json ...
+```
+
 1. A file in the local file system with an absolute path.
+
+```
+pyde --api=/opt/docs/myApi.json ...
+```
+
 1. A URL
+
+```
+pyde --api=http://www.example.com/docs/api.json ...
+```
+
 
 If the value of the `--api` option includes the text `://` then it is assumed to be a URL
 
