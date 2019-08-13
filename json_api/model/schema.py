@@ -5,6 +5,7 @@ from python_dev import utils
 
 class Schema(JsonModel):
     id = JsonModel.field(str)
+    type = JsonModel.field(str)
     title = JsonModel.field(str)
     multipleOf = JsonModel.field(int)
     maximum = JsonModel.field(int)

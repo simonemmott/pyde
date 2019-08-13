@@ -88,6 +88,10 @@ class PythonDevTests(TestCase):
         }
         self.assertEqual(expected, data, 'Loaded url not returned by load_location')
 
+    def test_load_open_api(self):
+        api = python_dev.load_open_api(utils.build_path('testing', 'test_environments', 'load_api', 'petstore.yaml'))
+        print(json.dumps(api.to_dict(), indent=4))
+
 
 
 

@@ -11,6 +11,7 @@ import yaml
 import configparser
 import requests
 from http import HTTPStatus
+from json_api.model import OpenApi
 
 
 ignore_dirs = ['^testing$', '^htmlcov$', '^build$', '^dist$', '^__.*', '.*.egg-info$']
@@ -207,7 +208,10 @@ def load_location(location):
             logger.warning('Unknown data format at location: {loc}. Trying JSON'.format(loc=location))
             return _load_json(location)
 
-    
+
+def load_open_api(location):
+    api = load_location(location)
+    return OpenApi(api)    
     
     
     
