@@ -1,4 +1,4 @@
-from json_model import unpack_data_types
+from json_model import register_models
 from .callback import Callback
 from .components import Components
 from .contact import Contact
@@ -28,4 +28,4 @@ from .server import Server
 from .tag import Tag
 from .xml import Xml
 
-unpack_data_types()
+register_models(__name__)

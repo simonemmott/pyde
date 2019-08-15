@@ -1,4 +1,4 @@
-from json_model import JsonModel
+from json_model import JsonModel, Any
 from .xml import Xml
 from .external_docs import ExternalDocs
 from python_dev import utils
@@ -22,13 +22,13 @@ class Schema(JsonModel):
     minPropoerties = JsonModel.field(int)
     required = JsonModel.list(str)
     enum = JsonModel.list(str)
-    allOf = JsonModel.list('json_api.model.Schema')
-    anyOf = JsonModel.list('json_api.model.Schema')
-    oneOf = JsonModel.list('json_api.model.Schema')
-    _not = JsonModel.list('json_api.model.Schema', 'not')
-    items = JsonModel.field('json_api.model.Schema')
-    properties = JsonModel.dict('json_api.model.Schema')
-    additionalProperties = JsonModel.dict('json_api.model.Schema')
+    allOf = JsonModel.list('Schema')
+    anyOf = JsonModel.list('Schema')
+    oneOf = JsonModel.list('Schema')
+    _not = JsonModel.list('Schema', 'not')
+    items = JsonModel.field('Schema')
+    properties = JsonModel.dict('Schema')
+    additionalProperties = JsonModel.dict('Schema')
     description = JsonModel.field(str)
     format = JsonModel.field(str)
     nullable = JsonModel.field(bool)
@@ -36,6 +36,7 @@ class Schema(JsonModel):
     writeOnly = JsonModel.field(bool)
     xml = JsonModel.field(Xml)
     externalDocs = JsonModel.field(ExternalDocs)
+    example = JsonModel.field(Any)
     deprecated = JsonModel.field(bool)
     
     def class_name(self):

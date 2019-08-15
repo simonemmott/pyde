@@ -10,7 +10,7 @@ from .callback import Callback
 from .reference import Reference
 
 class Components(JsonModel):
-    schemas = JsonModel.dict('json_api.model.Schema')
+    schemas = JsonModel.dict('Schema')
     responses = JsonModel.dict(Response)
     parameters = JsonModel.dict(Parameter)
     examples = JsonModel.dict(Example)

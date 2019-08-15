@@ -149,7 +149,7 @@ def _load_url(url):
                 logger.warning('Unable to get {url} as JSON'.format(url=url))
         if url[-5:].lower() == '.yaml' or url[-4:].lower() == '.yml':
             try:
-                return yaml.load(resp.content)
+                return yaml.safe_load(resp.content)
             except:
                 logger.warning('Unable to get {url} as YAML'.format(url=url))                
         else:

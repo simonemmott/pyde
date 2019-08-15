@@ -8,7 +8,7 @@ class Header(JsonModel):
     style = JsonModel.field(str)
     explode = JsonModel.field(bool)
     allowReserved = JsonModel.field(bool)
-    schema = JsonModel.field('json_api.model.Schema')
-    content = JsonModel.dict('json_api.model.MediaType')
+    schema = JsonModel.field('Schema')
+    content = JsonModel.dict('MediaType')
 
 

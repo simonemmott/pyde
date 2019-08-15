@@ -1,4 +1,4 @@
-from json_model import JsonModel
+from json_model import JsonModel, Any
 from .external_docs import ExternalDocs
 from .parameter import Parameter
 from .request_body import RequestBody
@@ -19,7 +19,7 @@ class Operation(JsonModel):
     responses = JsonModel.dict(Response, required=True)
     callbacks = JsonModel.dict(Callback, required=True)
     deprecated = JsonModel.field(bool)
-    security = JsonModel.list(SecurityRequirement)
+    security = JsonModel.list(Any)
     servers = JsonModel.list(Server)
 
 

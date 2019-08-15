@@ -4,6 +4,7 @@ import logging
 import json
 import python_dev
 from python_dev import utils
+import json_model
 
 
 class PythonDevTests(TestCase):
@@ -91,6 +92,8 @@ class PythonDevTests(TestCase):
     def test_load_open_api(self):
         api = python_dev.load_open_api(utils.build_path('testing', 'test_environments', 'load_api', 'petstore.yaml'))
         print(json.dumps(api.to_dict(), indent=4))
+        api = python_dev.load_open_api(utils.build_path('testing', 'test_environments', 'load_api', 'petstore.yaml'))
+        print(json.dumps(api.to_dict(unpack=False), indent=4))
 
 
 
