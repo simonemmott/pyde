@@ -26,7 +26,10 @@ def run(target, api):
     global meta
     meta = get_module_metadata(install_dir)
     if api:
-        meta.api = load_open_api(api)
+        if os.path.exists(api):
+            meta.api = load_open_api(api)
+        else:
+            logger.warning('Unable to load open API document at {loc}'.format(loc=api))
 
 @run.command(help='Show about message and exit')
 @click.option('--version', is_flag=True, help='Show the version and exit')

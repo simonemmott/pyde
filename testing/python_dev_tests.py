@@ -3,7 +3,7 @@ import os
 import logging
 import json
 import python_dev
-from python_dev import utils
+from python_dev import utils, configuration, Meta
 import json_model
 
 
@@ -91,11 +91,26 @@ class PythonDevTests(TestCase):
 
     def test_load_open_api(self):
         api = python_dev.load_open_api(utils.build_path('testing', 'test_environments', 'load_api', 'petstore.yaml'))
-        print(json.dumps(api.to_dict(), indent=4))
+#        print(json.dumps(api.to_dict(), indent=4))
         api = python_dev.load_open_api(utils.build_path('testing', 'test_environments', 'load_api', 'petstore.yaml'))
-        print(json.dumps(api.to_dict(unpack=False), indent=4))
+#        print(json.dumps(api.to_dict(unpack=False), indent=4))
 
+    def test_config_to_obj(self):
+        cfg = configuration.read_config(utils.build_path('testing', 'test_environments', 'configuration', 'test_1.ini'))
+        cfg_obj = configuration.config_to_obj(cfg)
+        self.assertEqual('VALUE', cfg_obj.pyde.name)
+        self.assertEqual('META_VALUE', cfg_obj.Meta.meta_name)
 
+    def test_add_config_meta(self):
+        meta = Meta()
+        cfg = configuration.read_config(utils.build_path('testing', 'test_environments', 'configuration', 'with_meta_data.ini'))
+        python_dev._add_config_meta(meta, cfg)
+        self.assertTrue(hasattr(meta, 'custom'))
+        self.assertEqual('NAME', meta.custom.name)
+        self.assertEqual('DESCRIPTION', meta.custom.description)
+        self.assertTrue(hasattr(meta, 'custom2'))
+        self.assertEqual('NAME_2', meta.custom2.name2)
+        self.assertEqual('DESCRIPTION_2', meta.custom2.description2)
 
 
 

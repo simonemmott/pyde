@@ -4,6 +4,7 @@ import configparser
 from importlib.resources import path
 import sys
 from pathlib import Path
+from json_model import Any
 
 def check_includes(install_dir):
     for name in os.listdir(install_dir):
@@ -59,6 +60,23 @@ def read_config(name=None, env_key=config_name.upper()+'_CFG'):
         print('Error in configuration file: {file}. Using default configs'.format(file=path))
         _default_config(config)
     return config
+
+def config_to_dict(cfg=None):
+    if not cfg:
+        cfg = config
+    d = {}
+    for group in cfg:
+        d[group] = {}
+        for item, value in cfg[group].items():
+            d[group][item] = value
+    return d
+
+def config_to_obj(cfg=None):
+    if not cfg:
+        cfg = config
+
+    return Any.load(config_to_dict(cfg))
+
 
 config = read_config()
 

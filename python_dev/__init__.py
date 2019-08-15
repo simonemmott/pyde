@@ -4,8 +4,9 @@ import re
 import importlib.util
 import logging
 logger = logging.getLogger(__name__)
-from python_dev import utils
+from python_dev import utils, configuration
 from json_model import Finder
+import json_model
 import json
 import yaml
 import configparser
@@ -45,6 +46,7 @@ class Meta(Finder):
         self.modules = kw.get('modules', [])
         self.about = kw.get('about', About())
         self.includes = kw.get('includes', [])
+        self.config = None
         self.api = None
         
     @property
@@ -57,6 +59,15 @@ class Meta(Finder):
         if name not in [module.name for module in self.modules]:
             raise ValueError('No module exists with name {name}'.format(name=name))
         return Module(meta=self, name=name)
+    
+def _add_config_meta(meta, config):
+    if 'Meta' in config:
+        for key, path in config['Meta'].items():
+            try:
+                setattr(meta, key, json_model.load(path))
+            except:
+                logger.warning('Unable to load {key} from {path} into Meta'.format(key=key, path=path))
+            
 
 def get_module_metadata(install_dir):
     meta = Meta()
@@ -83,6 +94,8 @@ def get_module_metadata(install_dir):
 #        elif os.path.isfile(file_path):
 #            if file[-3:].lower() == '.py':
 #                meta.modules.append(Module(meta=meta, name=file[:-3]))
+    meta.config = configuration.config_to_obj()
+    _add_config_meta(meta, configuration.config)
     return meta
 
 def write_about(about_py, version=None, author=None, email=None, description=None, package=None, url=None):
