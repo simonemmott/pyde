@@ -1,3 +1,3 @@
-from json_model import unpack_data_types
+from json_model import register_models
 
-unpack_data_types()
+register_models(__name__)

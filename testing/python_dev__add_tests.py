@@ -53,16 +53,16 @@ class AddTests(TestCase):
         add.model._model('MODEL')
         assert_in_file(
             build_path(pyde.install_dir, 'add_model', 'model', '__init__.py'),
-            'from json_model import unpack_data_types',
-            'unpack_data_types not imported into barrel')
+            'from json_model import register_models',
+            'register_models not imported into barrel')
         assert_in_file(
             build_path(pyde.install_dir, 'add_model', 'model', '__init__.py'),
             'from .model import Model',
             'Model not added to model barrel')
         assert_in_file(
             build_path(pyde.install_dir, 'add_model', 'model', '__init__.py'),
-            'unpack_data_types()',
-            'unpack_data_types not called in barrel')
+            'register_models(__name__)',
+            'register_models not called in barrel')
         
         
 

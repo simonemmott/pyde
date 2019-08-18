@@ -6,3 +6,4 @@ from .python_dev__init_tests import InitTests
 from .python_dev__util_tests import UtilTests
 from .python_dev__requirements_tests import RequirementsTests
 from .python_dev__add_tests import AddTests
+from .schema_tests import SchemaTests

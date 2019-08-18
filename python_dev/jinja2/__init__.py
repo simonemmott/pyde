@@ -31,7 +31,8 @@ def environment(**options):
         'to_class_case': python_dev.utils.to_class_case,
         'to_sentence_case': python_dev.utils.to_sentence_case,
         'to_title_case': python_dev.utils.to_title_case,
-        'to_plural': python_dev.utils.to_plural
+        'to_plural': python_dev.utils.to_plural,
+        'is_number': python_dev.utils.is_number
     })
     return env
 

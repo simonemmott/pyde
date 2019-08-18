@@ -1,4 +1,13 @@
-from json_model import JsonModel
+from json_model import JsonModel, Any
+from enum import Enum
 
+{% for enum in schema.get_enumerations() %}
+{% include 'add/model/enumeration.py' %}
+
+{% endfor %} 
+{% for schema in schema.get_embedded_properties() %}
+{% include 'add/model/embedded_property.py' %}
+
+{% endfor %} 
 class {{schema.class_name()}}(JsonModel):
-    pass
+{% include 'add/model/schema_properties.py' %}

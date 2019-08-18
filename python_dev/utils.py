@@ -77,3 +77,10 @@ def build_path(*path):
 
 def path_exists(*path):
     return os.path.exists(build_path(*path))
+
+def is_number(val):
+    try:
+        float(val)
+        return True
+    except:
+        return False

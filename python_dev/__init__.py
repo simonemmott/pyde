@@ -5,7 +5,7 @@ import importlib.util
 import logging
 logger = logging.getLogger(__name__)
 from python_dev import utils, configuration
-from json_model import Finder
+from json_model import Finder, references
 import json_model
 import json
 import yaml
@@ -184,8 +184,9 @@ def _load_json(location):
 def _load_yaml(location):
     try:
         with open(location, 'r') as fp:
-            return yaml.safe_load(fp)
-    except:
+            return yaml.load(fp, Loader=NoConversionYamlLoader)
+    except Exception as err:
+        print(str(err))
         logger.warning('Unable to load {loc} as YAML'.format(loc=location))
     return {}
 
@@ -202,6 +203,28 @@ def _load_ini(location):
     except:
         logger.warning('Unable to load {loc} as INI'.format(loc=location))
     return {}           
+    
+class NoConversionYamlLoader(yaml.SafeLoader):
+    @classmethod
+    def remove_implicit_resolver(cls, tag_to_remove):
+        """
+        Remove implicit resolvers for a particular tag
+
+        Takes care not to modify resolvers in super classes.
+
+        We want to load datetimes as strings, not dates, because we
+        go on to serialise as json which doesn't have the advanced types
+        of yaml, and leads to incompatibilities down the track.
+        """
+        if not 'yaml_implicit_resolvers' in cls.__dict__:
+            cls.yaml_implicit_resolvers = cls.yaml_implicit_resolvers.copy()
+
+        for first_letter, mappings in cls.yaml_implicit_resolvers.items():
+            cls.yaml_implicit_resolvers[first_letter] = [(tag, regexp) 
+                                                         for tag, regexp in mappings
+                                                         if tag != tag_to_remove]
+NoConversionYamlLoader.remove_implicit_resolver('tag:yaml.org,2002:timestamp')            
+
     
 
 def load_location(location):
@@ -220,11 +243,43 @@ def load_location(location):
         else:
             logger.warning('Unknown data format at location: {loc}. Trying JSON'.format(loc=location))
             return _load_json(location)
-
+def is_serializable(d):
+    try:
+        json.dumps(d)
+        return True
+    except:
+        return False
+    
+def check_serializable(d, path=''):
+    if isinstance(d, dict):
+        for key, value in d.items():
+            if not is_serializable(key):
+                return check_serializable(key, path+'::'+key)
+            if not is_serializable(value):
+                return check_serializable(value, path+'['+key+']')
+    elif isinstance(d, list):
+        i=0
+        for item in d:
+            if not is_serializable(item):
+                return check_serializable(item, path+'['+i+']')
+            i=i+1
+    else:
+        if not is_serializable(d):
+            return False, path
+    return True, path
+        
+    
 
 def load_open_api(location):
     api = load_location(location)
-    return OpenApi(api)    
+    try:
+        return OpenApi(api)
+    except Exception as err:
+        status, path = check_serializable(api)
+        if not status:
+            print('API not serializable at {path}'.format(path=path))
+        raise err
+
     
     
     
