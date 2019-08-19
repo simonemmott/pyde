@@ -1,7 +1,7 @@
 from python_dev import pyde
 from python_dev import utils
 from python_dev import jinja2
-from json_api.model import Schema
+from python_dev.json_api.model import Schema
 import json_model
 import os
 import os.path

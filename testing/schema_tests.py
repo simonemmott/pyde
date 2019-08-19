@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from json_api.model.schema import Schema, Property
+from python_dev.json_api.model.schema import Schema, Property
 
 
 class SchemaTests(TestCase):

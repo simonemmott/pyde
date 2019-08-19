@@ -12,7 +12,7 @@ import yaml
 import configparser
 import requests
 from http import HTTPStatus
-from json_api.model import OpenApi
+from .json_api.model import OpenApi
 
 
 ignore_dirs = ['^testing$', '^htmlcov$', '^build$', '^dist$', '^__.*', '.*.egg-info$']
