@@ -60,11 +60,12 @@ Option    | Description
 
 The `pyde` CLI includes the following sub commands:
 
-Sub command             | Description
-------------------------|----------------
-[about](#about-command) | Show information about the `pyde` command
-[init](#init-command)   | Initialise a new development environment
-[include](docs/inclusions.md)   | Initialise a new development environment
+Sub command                     | Description
+--------------------------------|----------------
+[about](#about-command)         | Show information about the `pyde` command
+[init](#init-command)           | Initialise a new development environment
+[include](docs/inclusions.md)   | Include meta data driven content in the development environment
+[add](docs/add.md)              | Add additional components to the development environment
 
 ### About Command
 
