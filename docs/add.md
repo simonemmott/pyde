@@ -54,12 +54,12 @@ The model name `pet_types` would have the class name `PetTypes` and a module nam
 
 The `add model <model_name>` command includes the following options:
 
-Options                           | Description
-----------------------------------|-------------------
---replace or --no-replace         | By default the add model method not overwrite an existing model class module. The `--replace` option overrides this behaviour and overwrites existing model class modules
---echo or --no-echo               | This option causes the add model command to echo out the contents of the model class module that was written by the add model command. The default behaviour is to not echo the contents of the generated model class modules.
---cascade or --no-cascade         | By default adding a new module which matches a schema in the given OpenApi document will only create the model class given on the command line. If the matching schema includes references to other schemas in the OpenApi document these referenced models can be automcatically included in the development project by adding the `--cascade` option.
---show-schema or --no-show-schema | By default the the add model method does not echo out the schema definition it is using to define the properties of the added model. The behaviour can be changed by specifying the `--show-schema` option. This is useful for debugging the `add model` command.
+Options       | Description
+--------------|-------------------
+--replace     | By default the add model method not overwrite an existing model class module. The `--replace` option overrides this behaviour and overwrites existing model class modules
+--echo        | This option causes the add model command to echo out the contents of the model class module that was written by the add model command. The default behaviour is to not echo the contents of the generated model class modules.
+--cascade     | By default adding a new module which matches a schema in the given OpenApi document will only create the model class given on the command line. If the matching schema includes references to other schemas in the OpenApi document these referenced models can be automcatically included in the development project by adding the `--cascade` option.
+--show-schema | By default the the add model method does not echo out the schema definition it is using to define the properties of the added model. The behaviour can be changed by specifying the `--show-schema` option. This is useful for debugging the `add model` command.
 
 If the matched schema in the OpenApi document defines embedded schemas. i.e. schemas which are not referenced to contents of the `components.schemas` dictionary of the OpenApi document then these embedded schemas are included in the generated model class module.
 
@@ -100,10 +100,10 @@ If no OpenApi docuemnt is loaded then a ValueError is raised and no changes are 
 
 The add api-models command includes the following options:
 
-Options                           | Description
-----------------------------------|-------------------
---replace or --no-replace         | By default the add model method not overwrite an existing model class module. The `--replace` option overrides this behaviour and overwrites existing model class modules
---echo or --no-echo               | This option causes the add model command to echo out the contents of the model class module that was written by the add model command. The default behaviour is to not echo the contents of the generated model class modules.
+Options   | Description
+----------|-------------------
+--replace | By default the add model method not overwrite an existing model class module. The `--replace` option overrides this behaviour and overwrites existing model class modules
+--echo    | This option causes the add model command to echo out the contents of the model class module that was written by the add model command. The default behaviour is to not echo the contents of the generated model class modules.
 
 
 
