@@ -4,6 +4,39 @@ from python_dev.json_api.model.schema import Schema, Property
 
 
 class SchemaTests(TestCase):
+    
+    def test_from_int(self):
+        self.assertEqual(Schema(type='integer'), Schema.from_obj(1))
+
+    def test_from_float(self):
+        self.assertEqual(Schema(type='number'), Schema.from_obj(1.0))
+
+    def test_from_bool(self):
+        self.assertEqual(Schema(type='boolean'), Schema.from_obj(True))
+
+    def test_from_str(self):
+        self.assertEqual(Schema(type='string'), Schema.from_obj("XXX"))
+
+    def test_from_list(self):
+        self.assertEqual(Schema(type='array', items=Schema(type='integer')), Schema.from_obj([1,2,3]))
+
+    def test_from_dict(self):
+        data = {
+            'type': 'object',
+            'properties': {
+                'attr1': { 'type': 'integer'},
+                'attr2': { 'type': 'number'},
+                'attr3': { 'type': 'string'}
+            }
+        }
+        expected = Schema(data)
+        actual = Schema.from_obj({
+            'attr1': 1,
+            'attr2': 1.0,
+            'attr3': 'XXX'
+        })
+        
+        self.assertEqual(expected, actual)
 
     def test_property(self):
         s = Schema(type='TYPE')
