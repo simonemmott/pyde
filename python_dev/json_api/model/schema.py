@@ -1,4 +1,4 @@
-from json_model import JsonModel, Reference, Any
+from json_model import JsonModel, Reference, Any, EmbeddedManager
 from .xml import Xml
 from .external_docs import ExternalDocs
 from python_dev import utils
@@ -45,6 +45,33 @@ class Schema(JsonModel):
     externalDocs = JsonModel.field(ExternalDocs)
     example = JsonModel.field(Any)
     deprecated = JsonModel.field(bool)
+    
+    @staticmethod
+    def from_obj(obj):
+        if isinstance(obj, bool):
+            return Schema(type='boolean')
+        if isinstance(obj, int):
+            return Schema(type='integer')
+        if isinstance(obj, float):
+            return Schema(type='number')
+        if isinstance(obj, str):
+            return Schema(type='string')
+        if isinstance(obj, list):
+            s = Schema(type='array')
+            if len(obj) == 0:
+                s.items = Schema(type='object')
+            else:
+                s.items = Schema.from_obj(obj[0])
+            return s
+        if isinstance(obj, dict):
+            s = Schema(type='object')
+            setattr(s, 'properties', EmbeddedManager(Schema.properties, {}, type=Schema, format=dict))
+            for name, parm in obj.items():
+                s.properties[name] = Schema.from_obj(parm)
+            return s
+        return Schema(type='object')
+                
+                
     
     def is_property(self):
         return False
